@@ -4,37 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download image from unsecure Url</title>
+    <meta name="description"
+        content="This is a website where anybody can download image by using its url (secured or unsecured base64 formated)" />
+    <title>Download image from Url</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
     <header>
-        <h1>Download Image from unsecure url</h1>
+        <h1 style="text-align: center;">Download Image from url</h1>
     </header>
 
 
     <main>
-        <label for="unsecureUrl">Copy paste your image unsecure url</label>
-        <input type="text" name="unsecureUrl" id="unsecureUrl" onchange="handleUrl(event)">
+        <label for="imageUrl">Copy paste your image url</label>
+        <input type="text" name="imageUrl" id="imageUrl" placeholder="https://image-url.com"
+            onchange="handleUrl(event)">
         <label for="imageName">Write Image Name (Optional)</label>
-        <input type="text" name="imageName" id="" onchange="handleImageName(event)">
-        <button id="generateImageBtn" onclick="handleGenerateImage(unsecureUrl, imageName)">
+        <input type="text" name="imageName" id="imageName" placeholder="house" onchange="handleImageName(event)">
+        <button id="generateImageBtn" onclick="handleGenerateImage(imageUrl, imageName)">
             Generate Image
         </button>
+
         <button id="downloadImageBtn">
+            Download Image
         </button>
 
-        <img id="previewImage" src="" alt="Image Preview">
+        <img id="previewImage" src="" alt="Image Preview" style="width: 300px; border-radius: 6px;">
     </main>
 
     <script>
-        let unsecureUrl;
+        let imageUrl;
         const date = new Date(Date.now())
         let imageName = `unsecure image ${date}`
 
         const generateImageBtn = document.getElementById("generateImageBtn")
+        const downloadImageBtn = document.getElementById("downloadImageBtn")
         generateImageBtn.disabled = true;
+        downloadImageBtn.disabled = true
 
         function handleGenerateImage(imageUrl, fileName) {
             const downloadImageBtn = document.getElementById("downloadImageBtn");
@@ -48,10 +56,10 @@
                     const downloadLink = document.createElement("a");
                     downloadLink.href = URL.createObjectURL(blob);
                     downloadLink.download = imageName || "image";
-                    downloadLink.innerText = "Download Image";
 
                     // Append the link to the download button
-                    downloadImageBtn.appendChild(downloadLink);
+                    downloadImageBtn.appendChild(downloadLink)
+                    downloadImageBtn.disabled = false;
                 })
                 .catch(error => console.error("Error fetching image:", error));
 
@@ -61,7 +69,7 @@
 
         function handleUrl(event) {
             const { value } = event.target
-            unsecureUrl = value
+            imageUrl = value
             generateImageBtn.disabled = !value;
         }
 
