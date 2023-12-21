@@ -20,9 +20,9 @@
     <main>
         <label for="imageUrl">Copy paste your image url</label>
         <input type="text" name="imageUrl" id="imageUrl" placeholder="https://image-url.com"
-            onchange="handleUrl(event)">
+            oninput="handleUrl(event)">
         <label for="imageName">Write Image Name (Optional)</label>
-        <input type="text" name="imageName" id="imageName" placeholder="house" onchange="handleImageName(event)">
+        <input type="text" name="imageName" id="imageName" placeholder="house" oninput="handleImageName(event)">
         <button id="generateImageBtn" onclick="handleGenerateImage(imageUrl, imageName)">
             Generate Image
         </button>
@@ -31,8 +31,13 @@
             Download Image
         </button>
 
-        <img id="previewImage" src="" alt="Image Preview" style="width: 300px; border-radius: 6px;">
+        <img id="previewImage" src="./images/image-preview.png" alt="Image Preview" style="width: 300px; height: 200px; border-radius: 6px; object-fit: contain;">
     </main>
+
+    <footer style="text-align: center; width: 100%; padding: 10px; position:absolute; bottom: 0;">
+        Made By Shivraj 
+        <a href="https://github.com/iamshiv007">Github</a>
+    </footer>
 
     <script>
         let imageUrl;
