@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download image from unsecure Url</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>Download Image from unsecure url</h1>
+    </header>
+
+
+    <main>
+        <label for="unsecureUrl">Copy paste your image unsecure url</label>
+        <input type="text" name="unsecureUrl" id="unsecureUrl" onchange="handleUrl(event)">
+        <label for="imageName">Write Image Name (Optional)</label>
+        <input type="text" name="imageName" id="" onchange="handleImageName(event)">
+        <button id="generateImageBtn" onclick="handleGenerateImage(unsecureUrl, imageName)">
+            Generate Image
+        </button>
+        <button id="downloadImageBtn">
+        </button>
+
+        <img id="previewImage" src="" alt="Image Preview">
+    </main>
+
+    <script>
+        let unsecureUrl;
+        const date = new Date(Date.now())
+        let imageName = `unsecure image ${date}`
+
+        const generateImageBtn = document.getElementById("generateImageBtn")
+        generateImageBtn.disabled = true;
+
+        function handleGenerateImage(imageUrl, fileName) {
+            const downloadImageBtn = document.getElementById("downloadImageBtn");
+            const previewImage = document.getElementById("previewImage");
+
+            // Fetch image as blob
+            fetch(imageUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    // Create download link
+                    const downloadLink = document.createElement("a");
+                    downloadLink.href = URL.createObjectURL(blob);
+                    downloadLink.download = imageName || "image";
+                    downloadLink.innerText = "Download Image";
+
+                    // Append the link to the download button
+                    downloadImageBtn.appendChild(downloadLink);
+                })
+                .catch(error => console.error("Error fetching image:", error));
+
+            // Display image in preview
+            previewImage.src = imageUrl;
+        }
+
+        function handleUrl(event) {
+            const { value } = event.target
+            unsecureUrl = value
+            generateImageBtn.disabled = !value;
+        }
+
+        function handleImageName(event) {
+            const { value } = event.target
+            if (value === "") {
+                return imageName = `unsecure image ${date}`
+            }
+            imageName = value
+        }
+
+    </script>
+</body>
+
+</html>
